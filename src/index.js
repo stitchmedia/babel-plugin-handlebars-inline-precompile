@@ -1,4 +1,6 @@
 import resolveCwd from 'resolve-cwd'
+import fs from 'fs';
+import pathLib from 'path';
 
 // Use local handlebars (if installed as a peer) rather than the version that
 // came with this plugin. Allows a newer handlebars to be used without needing
@@ -66,6 +68,12 @@ export default function({ types: t }) {
         }
 
         let template = node.arguments.length > 0 && node.arguments[0].value;
+
+        // if the template string is a valid filename, read in the template from there
+        if ( template.slice(-4) == '.hbs' ) {
+          var templatePath = pathLib.resolve(pathLib.dirname(file.file.opts.filename), template);
+          template = fs.readFileSync(templatePath).toString();
+        }
 
         // `hbs` should be called as `hbs('template')`.
         if (
