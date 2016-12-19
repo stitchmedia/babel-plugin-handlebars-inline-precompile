@@ -20,7 +20,8 @@
     "prebuild": "npm run clean",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register",
+    "install": "npm run build"
   },
   "keywords": [
     "babel-plugin"
